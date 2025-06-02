@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Hack</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+body{background:#0a0a0a;overflow:hidden;color:white;}
+#bg-frame{position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;border:none;}
+.floating-icon{position:fixed;bottom:60px;right:15px;width:55px;height:55px;background:#00bcd4;
+border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;
+box-shadow:0 5px 10px rgba(0,188,212,0.5);transition:.3s;font-size:22px;color:white;}
+.floating-icon:hover{transform:scale(1.1);}
+.dialog-box{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);
+width:280px;background:linear-gradient(135deg,#1a237e,#536dfe);border-radius:14px;
+padding:16px;box-shadow:0 8px 20px rgba(0,0,0,0.5);color:white;text-align:center;display:none;
+opacity:0;transition:.3s;animation:fadeIn .4s ease-in-out;}
+@keyframes fadeIn{0%{opacity:0;transform:translate(-50%,-50%) scale(0.8);}100%{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+.dialog-box.show{opacity:1;}
+.dialog-box h2{font-size:18px;margin-bottom:8px;color:#ffeb3b;}
+.prediction{font-size:14px;font-weight:bold;margin:5px 0;}
+.timer{font-size:24px;font-weight:bold;color:#76ff03;}
+.result{font-size:22px;font-weight:bold;margin-top:8px;transition:.5s;opacity:0;}
+.result.show{opacity:1;animation:pulse .8s infinite;}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+.big{color:#ff9800;}
+.small{color:#03a9f4;}
+.telegram-btn{display:inline-block;background:#ff4081;color:white;padding:8px 12px;
+border-radius:6px;text-decoration:none;font-weight:bold;font-size:13px;margin-top:12px;
+transition:.3s;}
+.telegram-btn:hover{background:#f50057;}
+.close{margin-top:10px;padding:9px 14px;border:none;background:#d32f2f;color:white;
+font-size:12px;border-radius:6px;cursor:pointer;}
+.footer{position:fixed;bottom:4px;right:8px;color:white;font-size:9px;cursor:pointer;}
+.footer:hover{text-decoration:underline;}
+
+.floating-icon {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(0,188,212,0.3); transform: scale(1); }
+  50% { box-shadow: 0 0 20px rgba(0,188,212,0.7); transform: scale(1.05); }
+  100% { box-shadow: 0 0 10px rgba(0,188,212,0.3); transform: scale(1); }
+}
+.dialog-box.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: fadeInScale 0.5s ease-out forwards;
+}
+@keyframes fadeInScale {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.footer {
+  animation: fadeInFooter 1.5s ease-in;
+}
+@keyframes fadeInFooter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.footer:hover {
+  text-shadow: 0 0 5px #fff;
+}
+</style>
+</head>
+<body>
+<iframe id="bg-frame" src="https://bdgwin.cc/#/register?invitationCode=372171400520"></iframe>
+<div class="floating-icon" id="open">✨</div>
+<div class="dialog-box" id="dialogBox">
+<h2>🔮 Prediction Panel</h2>
+<div class="prediction">📅 Period: <span id="period"></span></div>
+<div class="prediction">⏳ Cooldown: <span class="timer" id="timer">00:00</span></div>
+<div id="resText" class="result"></div>
+<a href="https://t.me/+eLGlSETpmAlhZWI9" target="_blank" class="telegram-btn">📩 Join Telegram</a>
+<button class="close" id="close">Close</button>
+</div>
+<p class="footer" id="madeBy">Made by Team ULTRA — Tg @ULTRA_BHAI</p>
+<script>
+(function(){
+let openBtn=document.getElementById("open"),
+dialogBox=document.getElementById("dialogBox"),
+timerText=document.getElementById("timer"),
+resText=document.getElementById("resText"),
+periodNum=document.getElementById("period"),
+closeBtn=document.getElementById("close"),
+footer=document.getElementById("madeBy"),
+bigSmall="BIG",counter=59;
+
+openBtn.onclick=()=>{dialogBox.classList.add("show");dialogBox.style.display="block"};
+closeBtn.onclick=()=>{dialogBox.classList.remove("show");setTimeout(()=>dialogBox.style.display="none",300)};
+footer.onclick=()=>{window.open(atob("aHR0cHM6Ly90Lm1lL1VMVFJBX0JIQUk="),"_blank")};
+
+function updatePrediction(){
+let now=new Date(),y=now.getUTCFullYear(),m=String(now.getUTCMonth()+1).padStart(2,'0'),
+d=String(now.getUTCDate()).padStart(2,'0'),h=now.getUTCHours(),min=now.getUTCMinutes(),
+total=h*60+min,period=`${y}${m}${d}1000${10001+total}`;
+periodNum.innerText=period;
+
+if(counter===59){
+bigSmall=Math.random()<0.5?"BIG":"SMALL";
+resText.classList.remove("show");
+setTimeout(()=>{resText.classList.add("show");resText.innerHTML=`<span class="${bigSmall==='BIG'?'big':'small'}">${bigSmall}</span>`},100);
+}
+counter--;if(counter<0)counter=59;
+timerText.innerText=`00:${String(counter).padStart(2,'0')}`}
+setInterval(updatePrediction,1000);updatePrediction();
+
+let drag=false,offsetX,offsetY;
+openBtn.addEventListener("mousedown",e=>{drag=true;
+offsetX=e.clientX-openBtn.getBoundingClientRect().left;
+offsetY=e.clientY-openBtn.getBoundingClientRect().top});
+document.addEventListener("mousemove",e=>{if(drag){
+openBtn.style.left=`${e.clientX-offsetX}px`;
+openBtn.style.top=`${e.clientY-offsetY}px`}});
+document.addEventListener("mouseup",()=>{drag=false});
+})();
+</script>
+</body>
+</html>
